@@ -6,14 +6,14 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.is;
 
-public class ReqresApiTest {
+public class ReqresApiTest extends TestBase {
 
     private String createBody = "{ \"name\": \"morpheus\", \"job\": \"leader\" }";
     private String updateBody = "{ \"name\": \"morpheus\", \"job\": \"dancer\" }";
     private String incorrectUpdateBody = "{ \"name\": , \"job\":  }";
 
     @Test
-    void successfulUserCreate(){
+    void successfulUserCreateTest(){
         given()
                 .log().uri()
                 .log().method()
@@ -21,7 +21,7 @@ public class ReqresApiTest {
                 .body(createBody)
                 .contentType(JSON)
                 .when()
-                    .post("https://reqres.in/api/users")
+                    .post("/users")
                 .then()
                     .log().status()
                     .log().body()
@@ -32,7 +32,7 @@ public class ReqresApiTest {
 
 
     @Test
-    void successfulUserUpdate(){
+    void successfulUserUpdateTest(){
         given()
                 .log().uri()
                 .log().method()
@@ -40,7 +40,7 @@ public class ReqresApiTest {
                 .body(updateBody)
                 .contentType(JSON)
                 .when()
-                    .patch("https://reqres.in/api/users/2")
+                    .patch("/users/2")
                 .then()
                     .log().status()
                     .log().body()
@@ -49,7 +49,7 @@ public class ReqresApiTest {
     }
 
     @Test
-    void negativeUserUpdate(){
+    void negativeUserUpdateTest(){
         given()
                 .log().uri()
                 .log().method()
@@ -57,7 +57,7 @@ public class ReqresApiTest {
                 .body(incorrectUpdateBody)
                 .contentType(JSON)
                 .when()
-                    .patch("https://reqres.in/api/users/2")
+                    .patch("/users/2")
                 .then()
                     .log().status()
                     .log().body()
@@ -65,12 +65,12 @@ public class ReqresApiTest {
     }
 
     @Test
-    void getOnePantoneColor(){
+    void getOnePantoneColorTest(){
         given()
                 .log().uri()
                 .log().method()
                 .when()
-                    .get("https://reqres.in/api/unknown/2")
+                    .get("/unknown/2")
                 .then()
                     .log().status()
                     .log().body()
@@ -78,12 +78,12 @@ public class ReqresApiTest {
     }
 
     @Test
-    void getAllPantoneColors(){
+    void getAllPantoneColorsTest(){
         given()
                 .log().uri()
                 .log().method()
                 .when()
-                    .get("https://reqres.in/api/unknown")
+                    .get("/unknown")
                 .then()
                     .log().status()
                     .log().body()
